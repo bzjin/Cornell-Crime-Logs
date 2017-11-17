@@ -3,21 +3,44 @@
 	<head>
 		<title>Body</title>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
 		<!-- D3 Library --> <script src="lib/d3.v4.min.js"></script>
 		<!-- D3-Tip --> <script src="lib/d3-tip.js"></script>
-		<!-- D3-Tip --> <script src="lib/crossfilter.min.js"></script>
+		<!-- Cross-filter --> <script src="lib/crossfilter.min.js"></script>
+		<!-- Leaflet CSS <script src="lib/leaflet.css"></script>
+		Leaflet.js <script src="lib/leaflet.js"></script> -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+   		integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+  		crossorigin=""/>
+ 		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+  		integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+   		crossorigin=""></script>
 		<link rel="stylesheet" href="lib/bootstrap.min.css"/>
-		<link rel="stylesheet" href="style/styles.css"/>
+		<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Open+Sans:300,700" rel="stylesheet">
+		<link rel="stylesheet" href="style/style.css"/>
+		<script src="lib/jquery-3.2.1.min.js"></script>
+
 	</head>
 
 	<body>
-		<h1> The Cornell Crime Logs </h1>
-		<p> Like many universities (examples), Cornell University keeps a <a href = "https://dailycrimelog.cupolice.cornell.edu/index.cfm"> public log </a> of incidents reported to the Cornell University Police Department. The log is published almost daily, but few people know about it. As of today, <a href="https://twitter.com/NickAtNews">Nicholas Bogel-Borroughs</a> remains the only person to be tweeting from the hashtag <a href="https://twitter.com/hashtag/CornellCrimeLog?src=hash">#CornellCrimeLog</a>. This visualization is an attempt to make this information more accessible to students and faculty. </p>
+		<div id="container">
+			<h1> The Cornell Crime Logs </h1>
+			<p id="tagline"> By Beatrice Jin </p>
+			<p> Like many universities (examples), Cornell University keeps a <a href = "https://dailycrimelog.cupolice.cornell.edu/index.cfm"> public log </a> of incidents reported to the Cornell University Police Department. The log is published almost daily, but few people know about it. As of today, <a href="https://twitter.com/NickAtNews">Nicholas Bogel-Borroughs</a> remains the only person to be tweeting from the hashtag <a href="https://twitter.com/hashtag/CornellCrimeLog?src=hash">#CornellCrimeLog</a>. This visualization is an attempt to make this information more accessible to students and faculty. </p>
 
-		<div id="dates"></div>
-		<div id="container"></div>
+			<p> The following graph shows the number of reported incidents that occur each day. Note that weekends are in grey. There seems to be a spike in reports right before Halloween... </p>
+			<div id="dates" class="full"></div>
+			<div id="scatter" class="full"></div>
 
-		<p> Note: The Cornell Crime Logs are erased past two months from the current date. For this reason, there is only data from about two months ago as of today. If you are interested in contributing to the dataset, please contact me at beatricezjin (at) gmail (dot) com, or visit the Github page for this project. The full dataset used in this visualization is available here. </p>
+			<div id="types" class="full"></div>
+
+			<p> When sorted by location, it seems like Barton Hall (16 incidents), Mary Donlon Hall (10 incidents), and the Cornell Store (9 incidents). Is this more evidence for Donlon's reputation as a party dorm and <a href="http://projects.cornellsun.com/projects/survey/html/correlations.html">homework cheaters</a>?
+			<div id="mapid"></div>
+
+
+			<p> Note: The Cornell Crime Logs are erased past two months from the current date. For this reason, there is only data from about two months ago as of today. If you are interested in contributing to the dataset, please contact me at beatricezjin (at) gmail (dot) com, or visit the Github page for this project. The full dataset used in this visualization is available <a href="https://github.com/bzjin/Cornell-Crime-Logs/blob/master/data/crimelogs.csv">here</a>. </p>
+		</div>
 
 	</body>
 	<script src= "scripts/main.js"> </script>
