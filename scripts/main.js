@@ -47,7 +47,6 @@ function visual (data, coord){
       .attr("transform", "translate(0," + (h - p.bot) + ")")
       .call(timeAxis)
 
-
   var yScale = d3.scaleLinear()
     .domain([0, d3.max(datesArray.map(a=>a.value))])
     .range([h-p.bot, p.top])
@@ -112,14 +111,27 @@ function visual (data, coord){
     .attr("width", w)
     .attr("height", h)
 
+  var narrAxis = d3.axisBottom(timeScale).tickFormat(timeFormat);
+
+  narrViz.append("g")
+      .attr("transform", "translate(0," + (h - p.bot) + ")")
+      .call(narrAxis)
+
   var tipNarr = d3.tip()
-    .attr('class', 'd3-tip')
+    .attr('class', 'd3-tip2')
     .offset([-10, 0])
     .html(function(d) {
-      return weekend2(new Date(d.Occurred)) + ", " + timeFormat(new Date(d.Occurred)) + "<br>" + d.Narrative; })
+      var occured = new Date(d.Occurred.split(" ")[0]);
+      return weekend2(occured) + ", " + timeFormat(occured) + 
+      "<br>" + d.Location + 
+      "<br>" + "<span class='bolded'>" + d.Incident_Type + "</span>" + 
+      "<br>" + d.Narrative; 
+    })
 
   var counter = Array.apply(null, Array(allTimes.length)).map(Number.prototype.valueOf,0);
+  var allTimesCompare = allTimes.map(a=>a.getTime());
   narrViz.call(tipNarr);
+  
   narrViz.selectAll(".circNarr")
     .data(type.top(Infinity))
     .enter()
@@ -128,13 +140,10 @@ function visual (data, coord){
           return timeScale(new Date(d.Occurred.split(" ")[0]))
         })
         .attr("cy", function(d){
-          //console.log(new Date(d.Occurred.split(" ")[0]));
-          //if (d.Occurred)
-          //console.log(allTimes.indexOf(new Date(d.Occurred.split(" ")[0])));
-
-          var index = allTimes.indexOf(new Date(d.Occurred.split(" ")[0]));
+          var index = allTimesCompare.indexOf(new Date(d.Occurred.split(" ")[0]).getTime());
           counter[index] += 1;
-          return yScale(1)
+          //console.log(counter, counter[index])
+          return yScale(counter[index])
         })
         .attr("r", 5)
         .style("fill", function(d){
@@ -146,9 +155,13 @@ function visual (data, coord){
         })
         .on("mouseover", function(d){
           tipNarr.show(d)
+          d3.select(this)
+            .style("fill", "#800000")
         })
         .on("mouseout", function(d){
           tipNarr.hide(d)
+          d3.select(this)
+            .style("fill", "black")
         })
 
   // create map object, tell it to live in 'map' div and give initial latitude, longitude, zoom values
@@ -172,7 +185,6 @@ function visual (data, coord){
         d.longitude = e.longitude;
       }
     })
-    console.log(d)
     var circle = L.circle([d.latitude, d.longitude], Math.sqrt(d.value)*10,{color:'red',opacity:1,fillColor: 'red',fillOpacity:.4}).addTo(mymap);
     circle.bindPopup(d.key + "<br>" + d.value + " incidents");
   })
