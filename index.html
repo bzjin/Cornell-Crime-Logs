@@ -3,20 +3,22 @@
 	<head>
 		<title>Body</title>
 		<meta charset="utf-8">
-		<!-- D3 Library --> <script src="js/d3.v4.min.js"></script>
-		<!-- D3-Tip --> <script src="js/d3-tip.js"></script>
-		<!-- D3-Tip --> <script src="js/crossfilter.min.js"></script>
+		<!-- D3 Library --> <script src="lib/d3.v4.min.js"></script>
+		<!-- D3-Tip --> <script src="lib/d3-tip.js"></script>
+		<!-- D3-Tip --> <script src="lib/crossfilter.min.js"></script>
+		<link rel="stylesheet" href="lib/bootstrap.min.css"/>
+		<link rel="stylesheet" href="style/styles.css"/>
 	</head>
 
 	<body>
 		<h1> The Cornell Crime Logs </h1>
 		<p> Like many universities (examples), Cornell University keeps a <a href = "https://dailycrimelog.cupolice.cornell.edu/index.cfm"> public log </a> of incidents reported to the Cornell University Police Department. The log is published almost daily, but few people know about it. As of today, <a href="https://twitter.com/NickAtNews">Nicholas Bogel-Borroughs</a> remains the only person to be tweeting from the hashtag <a href="https://twitter.com/hashtag/CornellCrimeLog?src=hash">#CornellCrimeLog</a>. This visualization is an attempt to make this information more accessible to students and faculty. </p>
-		
+
 		<div id="dates"></div>
 		<div id="container"></div>
 
 		<p> Note: The Cornell Crime Logs are erased past two months from the current date. For this reason, there is only data from about two months ago as of today. If you are interested in contributing to the dataset, please contact me at beatricezjin (at) gmail (dot) com, or visit the Github page for this project. The full dataset used in this visualization is available here. </p>
 
 	</body>
-	<script src= "main.js"> </script>
+	<script src= "scripts/main.js"> </script>
 </html>
