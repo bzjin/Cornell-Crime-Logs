@@ -138,7 +138,7 @@ function visual (data, coord){
     .enter()
       .append("circle")
         .attr("id", function(d){
-          return d.Incident_Type.split(" ")[0];
+          return d.Incident_Type.replace(/[ ]+/g, "_");
         })
         .attr("cx", function(d){
           return timeScale(new Date(d.Occurred.split(" ")[0]))
@@ -150,13 +150,15 @@ function visual (data, coord){
           return yScale(counter[index])
         })
         .attr("r", 5)
-        .style("fill", function(d){
+        .style("stroke-width", .5)
+        .style("stroke", function(d){
           if (weekend(new Date(d.Occurred)) == "Sun" || weekend(new Date(d.Occurred)) == "Sat"){
             return "grey"
           } else {
             return "black"
           }
         })
+        .style("fill", "white")
         .on("mouseover", function(d){
           tipNarr.show(d)
           d3.select(this)
@@ -168,13 +170,21 @@ function visual (data, coord){
             .style("opacity", 1)
         })
 
-  var colorScale = d3.scaleOrdinal(d3.schemeCategory20).range().concat(d3.scaleOrdinal(d3.schemeCategory20b).range());
+        //9, 12, 19
+  var colorScale = [
+            "#16903E", "#001E09", "#FF34FF", "#FF4A46", "#008941", "#006FA6", "#A30059",
+            "#004B28", "#7A4900", "#0000A6", "#806C66", "#B79762", "#004D43", "#8FB0FF", "#997D87",
+            "#5A0007", "#809693", "#1B4400", "#4FC601", "#3B5DFF", "#4A3B53", "#FF2F80",
+            "#61615A", "#BA0900", "#6B7900", "#00C2A0", "#FFAA92", "#FF90C9", "#B903AA", "#D16100",
+            "#DDEFFF", "#000035", "#7B4F4B", "#A1C299", "#300018", "#0AA6D8", "#013349", "#00846F",
+            "#372101", "#FFB500", "#C2FFED", "#A079BF", "#CC0744", "#C0B9B2", "#C2FF99"];
+  //d3.scaleOrdinal(d3.schemeCategory20).range().concat(d3.scaleOrdinal(d3.schemeCategory20b).range());
   
   //button
   for (i=0; i<types.top(Infinity).length; i++){
       var button = document.createElement("button");
       button.innerHTML = types.top(Infinity)[i].key + " (" + types.top(Infinity)[i].value + ")";
-      button.setAttribute('id', types.top(Infinity)[i].key.split(" ")[0]); 
+      button.setAttribute('id', types.top(Infinity)[i].key.replace(/[ ]+/g, "_")); 
       button.setAttribute('class', i + " button"); 
       button.addEventListener('click', function(e){
           var self = this;
@@ -191,7 +201,7 @@ function visual (data, coord){
             self.style.background = "white";
             self.style.color = "black"; 
             $(self).removeClass("clicked");
-            d3.selectAll("#" + thistype).style("fill", "black");
+            d3.selectAll("#" + thistype).style("fill", "white");
           }
       });
       button.addEventListener('mouseover', function(e){
@@ -210,7 +220,7 @@ function visual (data, coord){
           if (d3.select(self).classed("clicked") == false){
             self.style.background = "white";
             self.style.color = "black"; 
-            d3.selectAll("#" + thistype).style("fill", "black");
+            d3.selectAll("#" + thistype).style("fill", "white");
           } else {
             $(self).addClass("clicked");
             d3.selectAll("#" + thistype).style("fill", colorScale[index]);
@@ -226,7 +236,7 @@ function visual (data, coord){
   // add base map tiles from OpenStreetMap and attribution info to 'map' div
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  maxZoom: 18,
+  maxZoom: 15,
   minZoom: 14,
   }).addTo(mymap);
 
@@ -242,10 +252,15 @@ function visual (data, coord){
     })
     var circle = L.circle([d.latitude, d.longitude], Math.sqrt(d.value)*10,{color:'red',opacity:1,fillColor: 'red',fillOpacity:.4}).addTo(mymap);
     circle.bindPopup(function(){
-      var str = "<b>" + d.key + "</b><br>" + d.value + " incidents";
+      var str = "<b>" + d.key + "</b><br>" + d.value + " incident(s)";
       var locs = location.top(Infinity).filter(function(e){ return e.Location == d.key})
+      locs.sort(function(a,b){
+        if (new Date(a.Occurred).getTime() < new Date(b.Occurred).getTime()){ return 1;}
+        else if (new Date(a.Occurred).getTime() > new Date(b.Occurred).getTime()){ return -1;}
+        return 0;
+      })
       locs.forEach(function(e){
-        str = str + "<br><b>" + e.Occurred.split(" ")[0] + ":</b> " + e.Narrative;
+        str = str + "<br><b>" + e.Incident_Type + ":</b> " + e.Narrative;
       })
       return str;
     });
