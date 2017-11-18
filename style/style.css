@@ -146,5 +146,4 @@ p{
 
 .button:hover, .button:active, .button:focus{
   outline: none;
-  border:none;
 }
