@@ -15,6 +15,7 @@ function visual (data, coord){
   var data = crossfilter(data);
   var type = data.dimension(function(d){ return d.Incident_Type})
   var types = type.group(); //key is Incident Type, value is count
+  console.log(types.top(Infinity))
 
   var location = data.dimension(function(d){ return d.Location})
   var locations = location.group();
@@ -136,6 +137,9 @@ function visual (data, coord){
     .data(type.top(Infinity))
     .enter()
       .append("circle")
+        .attr("id", function(d){
+          return d.Incident_Type.split(" ")[0];
+        })
         .attr("cx", function(d){
           return timeScale(new Date(d.Occurred.split(" ")[0]))
         })
@@ -156,13 +160,64 @@ function visual (data, coord){
         .on("mouseover", function(d){
           tipNarr.show(d)
           d3.select(this)
-            .style("fill", "#800000")
+            .style("opacity", .5)
         })
         .on("mouseout", function(d){
           tipNarr.hide(d)
           d3.select(this)
-            .style("fill", "black")
+            .style("opacity", 1)
         })
+
+  var colorScale = d3.scaleOrdinal(d3.schemeCategory20).range().concat(d3.scaleOrdinal(d3.schemeCategory20b).range());
+  
+  //button
+  for (i=0; i<types.top(Infinity).length; i++){
+      var button = document.createElement("button");
+      button.innerHTML = types.top(Infinity)[i].key + " (" + types.top(Infinity)[i].value + ")";
+      button.setAttribute('id', types.top(Infinity)[i].key.split(" ")[0]); 
+      button.setAttribute('class', i + " button"); 
+      button.addEventListener('click', function(e){
+          var self = this;
+          var index = d3.select(this).attr("class").split(" ")[0];
+          var thistype = d3.select(this).attr("id");
+          // if not clicked, then add features
+          if (d3.select(this).classed("clicked") == false){
+            self.style.background = colorScale[index];
+            self.style.color = "white"; 
+            $(self).addClass("clicked");
+            d3.selectAll("#" + thistype).style("fill", colorScale[index]);
+          // if clicked, then remove features
+          } else {
+            self.style.background = "white";
+            self.style.color = "black"; 
+            $(self).removeClass("clicked");
+            d3.selectAll("#" + thistype).style("fill", "black");
+          }
+      });
+      button.addEventListener('mouseover', function(e){
+          //console.log(this)
+          var self = this;
+          var index = d3.select(this).attr("class").split(" ")[0];
+          var thistype = d3.select(this).attr("id");
+          self.style.background = colorScale[index];
+          self.style.color = "white"; 
+          d3.selectAll("#" + thistype).style("fill", colorScale[index]);
+      });
+      button.addEventListener('mouseout', function(e){
+          var self = this;
+          var index = d3.select(this).attr("class").split(" ")[0];
+          var thistype = d3.select(this).attr("id");
+          if (d3.select(self).classed("clicked") == false){
+            self.style.background = "white";
+            self.style.color = "black"; 
+            d3.selectAll("#" + thistype).style("fill", "black");
+          } else {
+            $(self).addClass("clicked");
+            d3.selectAll("#" + thistype).style("fill", colorScale[index]);
+          }
+      });
+      document.getElementById("types_checkbox").appendChild(button);
+  }
 
   // create map object, tell it to live in 'map' div and give initial latitude, longitude, zoom values
   // pass option to turn scroll wheel zoom off
@@ -186,7 +241,14 @@ function visual (data, coord){
       }
     })
     var circle = L.circle([d.latitude, d.longitude], Math.sqrt(d.value)*10,{color:'red',opacity:1,fillColor: 'red',fillOpacity:.4}).addTo(mymap);
-    circle.bindPopup(d.key + "<br>" + d.value + " incidents");
+    circle.bindPopup(function(){
+      var str = "<b>" + d.key + "</b><br>" + d.value + " incidents";
+      var locs = location.top(Infinity).filter(function(e){ return e.Location == d.key})
+      locs.forEach(function(e){
+        str = str + "<br><b>" + e.Occurred.split(" ")[0] + ":</b> " + e.Narrative;
+      })
+      return str;
+    });
   })
 
 }

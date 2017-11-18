@@ -120,3 +120,18 @@ p{
   width: 1800px;
   margin-left: -400px;
 }
+
+#types_checkbox {
+  margin-top: 20px;
+}
+
+.button {
+  font-family: "Open Sans";
+  font-size: .8em;
+  margin: 0px 2px 2px 0px;
+}
+
+.button:hover, .button:active, .button:focus{
+  outline: none;
+  border:none;
+}
