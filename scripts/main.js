@@ -236,7 +236,7 @@ function visual (data, coord){
   // add base map tiles from OpenStreetMap and attribution info to 'map' div
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  maxZoom: 15,
+  maxZoom: 17,
   minZoom: 14,
   }).addTo(mymap);
 
