@@ -127,11 +127,12 @@ p{
 }
 
 .caption{
+  width: 100%;
   color: grey;
   font-size: 10px;
   float: right;
   font-family: "Open Sans";
-  margin-right: -30%;
+  margin-bottom: 20px;
 }
 
 #types_checkbox {
