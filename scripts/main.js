@@ -250,6 +250,8 @@ function visual (data, coord){
         d.longitude = e.longitude;
       }
     })
+          //console.log(d)
+
     var circle = L.circle([d.latitude, d.longitude], Math.sqrt(d.value)*10,{color:'red',opacity:1,fillColor: 'red',fillOpacity:.4}).addTo(mymap);
     circle.bindPopup(function(){
       var str = "<b>" + d.key + "</b><br>" + d.value + " incident(s)";
