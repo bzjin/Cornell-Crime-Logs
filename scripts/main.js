@@ -25,10 +25,9 @@ function visual (data, coord){
   var datesArray = dates.top(Infinity);
   datesArray.sort();
   
-  var allTimes = datesArray.map(a => a.key.split(" ")[0]); //dates in an array
+  var allTimes = datesArray.map(a => new Date(a.key.split(" ")[0]).getTime()); //dates in an array
   allTimes.sort();
   allTimes = allTimes.map(a => new Date(a))
-
 
   var dateViz = d3.select("#dates").append("svg")
     .attr("width", w)
@@ -90,7 +89,7 @@ function visual (data, coord){
         .attr("y", function(d){
           return yScale(d.value)
         })
-        .attr("width", 10)
+        .attr("width", 7)
         .attr("height", function(d){
           return hScale(d.value)
         })
@@ -108,15 +107,25 @@ function visual (data, coord){
           tipTime.hide(d)
         })
 
+  var h2 = h + 100;
+  var w2 = w + 200;
   var narrViz = d3.select("#scatter").append("svg")
-    .attr("width", w)
-    .attr("height", h)
+    .attr("width", w2)
+    .attr("height", h2)
+    .style("overflow", "visible")
 
-  var narrAxis = d3.axisBottom(timeScale).tickFormat(timeFormat);
+  var timeScale2 = timeScale;
+  timeScale2.range([p.left - 100, w2 - p.right])
+
+  var narrAxis = d3.axisBottom(timeScale2).tickFormat(timeFormat);
 
   narrViz.append("g")
-      .attr("transform", "translate(0," + (h - p.bot) + ")")
+      .attr("transform", "translate(0," + (h2 - p.bot) + ")")
       .call(narrAxis)
+
+  var yScale2 = d3.scaleLinear()
+    .domain([0, d3.max(datesArray.map(a=>a.value))])
+    .range([h2-p.bot, p.top])
 
   var tipNarr = d3.tip()
     .attr('class', 'd3-tip2')
@@ -141,13 +150,13 @@ function visual (data, coord){
           return d.Incident_Type.replace(/[ ]+/g, "_");
         })
         .attr("cx", function(d){
-          return timeScale(new Date(d.Occurred.split(" ")[0]))
+          return timeScale2(new Date(d.Occurred.split(" ")[0]))
         })
         .attr("cy", function(d){
           var index = allTimesCompare.indexOf(new Date(d.Occurred.split(" ")[0]).getTime());
           counter[index] += 1;
           //console.log(counter, counter[index])
-          return yScale(counter[index])
+          return yScale2(counter[index])
         })
         .attr("r", 5)
         .style("stroke-width", .5)
