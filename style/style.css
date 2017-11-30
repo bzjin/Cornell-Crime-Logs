@@ -37,6 +37,10 @@ p{
   margin: 5% 20%;
 }
 
+#container2 {
+  margin: 0% 20%;
+}
+
 .greyaxis line, .greyaxis path{
   stroke-width: .5;
   stroke: "grey";
@@ -121,16 +125,15 @@ p{
 }
 
 #mapid {
-  height: 400px;
-  width: 1800px;
-  margin-left: -400px;
+  height: 600px;
+  width: 100%;
 }
 
 .caption{
   width: 100%;
   color: grey;
   font-size: 10px;
-  float: right;
+  text-align: center;
   font-family: "Open Sans";
   margin-bottom: 20px;
 }
@@ -148,3 +151,7 @@ p{
 .button:hover, .button:active, .button:focus{
   outline: none;
 }
+
+
+.leaflet-popup-content { height : 150px; overflow : auto; }
+

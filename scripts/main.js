@@ -15,7 +15,6 @@ function visual (data, coord){
   var data = crossfilter(data);
   var type = data.dimension(function(d){ return d.Incident_Type})
   var types = type.group(); //key is Incident Type, value is count
-  console.log(types.top(Infinity))
 
   var location = data.dimension(function(d){ return d.Location})
   var locations = location.group();
@@ -240,8 +239,9 @@ function visual (data, coord){
 
   // create map object, tell it to live in 'map' div and give initial latitude, longitude, zoom values
   // pass option to turn scroll wheel zoom off
-  var mymap = L.map('mapid').setView([42.4500, -76.4800], 16);
- 
+  var mymap = L.map('mapid').setView([42.4500, -76.4800], 15);
+  console.log(locations.top(Infinity));
+  
   // add base map tiles from OpenStreetMap and attribution info to 'map' div
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -249,7 +249,17 @@ function visual (data, coord){
   minZoom: 14,
   }).addTo(mymap);
 
-  console.log(locations.top(Infinity))
+  mymap.scrollWheelZoom.disable();
+
+  mymap.on('click', function() {
+    if (mymap.scrollWheelZoom.enabled()) {
+      mymap.scrollWheelZoom.disable();
+      }
+      else {
+      mymap.scrollWheelZoom.enable();
+      }
+    });
+
   var loc = coord.map(a => a.location);
   // add circle by passing center, radius, and some basic styles
   locations.top(Infinity).forEach(function(d){
@@ -260,7 +270,6 @@ function visual (data, coord){
       }
     })
           //console.log(d)
-
     var circle = L.circle([d.latitude, d.longitude], Math.sqrt(d.value)*10,{color:'red',opacity:1,fillColor: 'red',fillOpacity:.4}).addTo(mymap);
     circle.bindPopup(function(){
       var str = "<b>" + d.key + "</b><br>" + d.value + " incident(s)";
