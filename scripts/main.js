@@ -124,7 +124,7 @@ function visual (data, coord){
 
   var yScale2 = d3.scaleLinear()
     .domain([0, d3.max(datesArray.map(a=>a.value))])
-    .range([h2-p.bot, p.top])
+    .range([h2-p.bot, 20])
 
   var tipNarr = d3.tip()
     .attr('class', 'd3-tip2')

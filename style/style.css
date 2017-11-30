@@ -34,7 +34,7 @@ p{
 }
 
 #container {
-  margin: 5% 20%;
+  margin: 5% 20% 1% 20%;
 }
 
 #container2 {
@@ -42,7 +42,7 @@ p{
 }
 
 .visuals {
-  margin: 0% 5%;
+  margin: 0% 10%;
   overflow: visible;
 }
 
