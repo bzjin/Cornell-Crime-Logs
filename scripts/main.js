@@ -114,7 +114,7 @@ function visual (data, coord){
     .style("overflow", "visible")
 
   var timeScale2 = timeScale;
-  timeScale2.range([p.left - 100, w2 - p.right])
+  timeScale2.range([p.left - 150, w2 - 50-p.right])
 
   var narrAxis = d3.axisBottom(timeScale2).tickFormat(timeFormat);
 
@@ -240,8 +240,7 @@ function visual (data, coord){
   // create map object, tell it to live in 'map' div and give initial latitude, longitude, zoom values
   // pass option to turn scroll wheel zoom off
   var mymap = L.map('mapid').setView([42.4500, -76.4800], 15);
-  console.log(locations.top(Infinity));
-  
+
   // add base map tiles from OpenStreetMap and attribution info to 'map' div
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
