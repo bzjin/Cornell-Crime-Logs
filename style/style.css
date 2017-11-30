@@ -41,6 +41,15 @@ p{
   margin: 0% 20%;
 }
 
+.visuals {
+  margin: 0% 5%;
+  overflow: visible;
+}
+
+.visuals svg{
+  overflow: visible;
+}
+
 .greyaxis line, .greyaxis path{
   stroke-width: .5;
   stroke: "grey";

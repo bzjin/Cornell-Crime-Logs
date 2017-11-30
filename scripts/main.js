@@ -11,7 +11,7 @@ function ready(error, results) {
 function visual (data, coord){
   var w = $(".full").width(),
       h = 200,
-      p = {"top": 50, "right": 10, "left": 20, "bot": 20};
+      p = {"top": 50, "right": 10, "left": 10, "bot": 20};
   var data = crossfilter(data);
   var type = data.dimension(function(d){ return d.Incident_Type})
   var types = type.group(); //key is Incident Type, value is count
@@ -88,7 +88,7 @@ function visual (data, coord){
         .attr("y", function(d){
           return yScale(d.value)
         })
-        .attr("width", 7)
+        .attr("width", 10)
         .attr("height", function(d){
           return hScale(d.value)
         })
@@ -107,14 +107,14 @@ function visual (data, coord){
         })
 
   var h2 = h + 100;
-  var w2 = w + 200;
+  var w2 = w ;
   var narrViz = d3.select("#scatter").append("svg")
     .attr("width", w2)
     .attr("height", h2)
     .style("overflow", "visible")
 
   var timeScale2 = timeScale;
-  timeScale2.range([p.left - 150, w2 - 50-p.right])
+  timeScale2.range([p.left , w2 - p.right])
 
   var narrAxis = d3.axisBottom(timeScale2).tickFormat(timeFormat);
 
