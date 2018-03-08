@@ -5,19 +5,26 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-		<!-- D3 Library --> <script src="lib/d3.v4.min.js"></script>
-		<!-- D3-Tip --> <script src="lib/d3-tip.js"></script>
-		<!-- Cross-filter --> <script src="lib/crossfilter.min.js"></script>
-		<!-- Leaflet CSS <script src="lib/leaflet.css"></script>
-		Leaflet.js <script src="lib/leaflet.js"></script> -->
+		<!-- D3 Library -->
+		<script src="lib/d3.v4.min.js"></script>
+		<!-- D3-Tip -->
+		<script src="lib/d3-tip.js"></script>
+		<!-- Cross-filter -->
+		<script src="lib/crossfilter.min.js"></script>
+
+		<!-- Leaflet
+		<script src="lib/leaflet.css"></script>
+		<script src="lib/leaflet.js"></script> -->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
    		integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
   		crossorigin=""/>
  		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
   		integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
    		crossorigin=""></script>
+
+   		<!-- styles -->
 		<link rel="stylesheet" href="lib/bootstrap.min.css"/>
-		<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Open+Sans:300,700" rel="stylesheet">
+		<link rel="stylesheet" href="style/fonts.css">
 		<link rel="stylesheet" href="style/style.css"/>
 		<script src="lib/jquery-3.2.1.min.js"></script>
 
@@ -41,8 +48,8 @@
 			<div id="scatter" class="full"></div>
 			<div class="caption">Hover over the circles to see the incident narratives. Click on the incident type buttons to compare them with each other.</div>
 		</div>
-		
-		<div id="container">		
+
+		<div id="container">
 			<p> When sorted by location, Barton Hall, College Avenue, and <a href="http://projects.cornellsun.com/projects/survey/html/correlations.html">Mary Donlon Hall</a> have the most reported incidents (31, 20, and 13 incidents, respectively). Following closely, 10 out of 11 incidents at the Cornell Store had to do with larceny. There was one case of aggravated assault on staff through harassing emails and telephone messages (Oct. 26). Writing on bathroom walls is still a popular sport and categorized as criminal mischief. Graffiti is reported in Snee Hall and Olin Library. There were 13 incidents reported in fraternities this semester.
 		</div>
 
@@ -51,15 +58,8 @@
 
 		<div id="container2">
 			<h3> About the Data </h3>
-			<p> The Clery Act mandates that up to two months of crime data be maintained in the public logs. For this reason, someone who wants to access the past seven years of the crime logs must request for that information from their respective campus police departments. The data will then be made available within two business days. When I went to the Cornell University Police Department, I was led into a small room with a single couch, small desk with a laptop, and chair. A small flash drive poked out of the laptop. I was told that there were no pictures allowed, only notes. That afternoon, I spent 3.5 hours manually collecting the crime log data as employees of CUPD took turns watching me.</p>
-
-			<p>Although I haven't been able to collect more than the past five months of data, I have included a <a href="https://github.com/bzjin/Cornell-Crime-Logs/blob/master/data/items_stolen.csv"> list</a> of interesting items that were stolen between July 2015 to present. Items include suit pants, a "Lulu Lemon bag, shirt, blanket bag", 54 glass bottles of Starbucks coffee, and a blue sectional love seat.</p>
-
 			<p>If you are interested in contributing to the dataset or this project, please contact me at beatricezjin (at) gmail (dot) com, or visit the Github <a href="https://github.com/bzjin/Cornell-Crime-Logs">page</a> for this project. The full dataset used in this visualization is available <a href="https://github.com/bzjin/Cornell-Crime-Logs/blob/master/data/crimelogs.csv">here</a>. Thanks to Edy for helping collect coordinates of over a hundred locations in Ithaca. </p>
 
-			<h3> Author's Note </h3>
-			<p> This is an independent project, with no affiliation to Cornell University or the Cornell University Police Department. It does not condone the use of law enforcement authority to police student lives. The police state will always have its origins in <a href="http://plsonline.eku.edu/insidelook/brief-history-slavery-and-origins-american-policing">white supremacy</a> and brutalizing black lives. There is no profit or compensation in any form involved in its creation or publication.</p>
-			</div>
 
 	</body>
 	<script src= "scripts/main.js"> </script>
